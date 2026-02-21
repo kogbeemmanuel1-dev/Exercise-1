@@ -1,0 +1,114 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// 5.1 Student Management - Class Implementation
+class Student {
+private:
+    string name;
+    string indexNumber;
+
+public:
+    // Constructor for Week 1 requirements
+    Student(string n, string id) : name(n), indexNumber(id) {}
+
+    // Getters
+    string getName() const { return name; }
+    string getIndexNumber() const { return indexNumber; }
+
+    // Display student details
+    void display() const {
+        cout << "Index Number: " << indexNumber << " | Name: " << name << endl;
+    }
+};
+
+// Data structure to hold students (Week 1 logic)
+vector<Student> studentList;
+
+// 5.1.1 Register students
+void registerStudent() {
+    string name, id;
+    cout << "\n--- Register New Student ---" << endl;
+    cout << "Enter Student Full Name: ";
+    cin.ignore();
+    getline(cin, name);
+    cout << "Enter Student Index Number: ";
+    cin >> id;
+
+    studentList.push_back(Student(name, id));
+    cout << "Student successfully registered!" << endl;
+}
+
+// 5.1.2 View all registered students
+void viewAllStudents() {
+    cout << "\n--- List of All Registered Students ---" << endl;
+    if (studentList.empty()) {
+        cout << "No students registered in the system." << endl;
+        return;
+    }
+    for (const auto& s : studentList) {
+        s.display();
+    }
+}
+
+// 5.1.3 Search students by index number
+void searchStudentByIndex() {
+    if (studentList.empty()) {
+        cout << "\nNo students available to search." << endl;
+        return;
+    }
+
+    string searchID;
+    cout << "\nEnter Index Number to search: ";
+    cin >> searchID;
+
+    bool found = false;
+    for (const auto& s : studentList) {
+        if (s.getIndexNumber() == searchID) {
+            cout << "Student Found: " << s.getName() << " (Index: " << s.getIndexNumber() << ")" << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        cout << "Error: Student with index " << searchID << " not found." << endl;
+    }
+}
+
+int main() {
+    int choice;
+
+    // Menu-driven console application (Requirement 3)
+    do {
+        cout << "\n===============================" << endl;
+        cout << " DIGITAL ATTENDANCE SYSTEM (W1)" << endl;
+        cout << "===============================" << endl;
+        cout << "1. Register Student" << endl;
+        cout << "2. View All Registered Students" << endl;
+        cout << "3. Search Student by Index" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                registerStudent();
+                break;
+            case 2:
+                viewAllStudents();
+                break;
+            case 3:
+                searchStudentByIndex();
+                break;
+            case 0:
+                cout << "Closing system. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid selection. Please try again." << endl;
+        }
+    } while (choice != 0);
+
+    return 0;
+}
